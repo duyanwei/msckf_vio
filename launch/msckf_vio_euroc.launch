@@ -13,6 +13,17 @@
 
   <!-- Msckf Vio Nodelet  -->
   <group ns="$(arg robot)">
+
+    <node pkg="nodelet" type="nodelet" name="benchmark" 
+      args='standalone msckf_vio/BenchmarkNodelet' 
+      output="screen">
+      <param name="ground_truth" value="/media/duyanwei/du/data/Euroc/MAV/MH_04_data.csv" />
+      <param name="fixed_frame_id" value="$(arg fixed_frame_id)"/>
+      <param name="child_frame_id" value="odom"/>
+
+      <remap from="~odom" to="/$(arg robot)/vio/odom"/>
+    </node>
+
     <node pkg="nodelet" type="nodelet" name="vio"
       args='standalone msckf_vio/MsckfVioNodelet'
       output="screen">
@@ -55,6 +66,9 @@
       <remap from="~imu" to="/imu0"/>
       <remap from="~features" to="image_processor/features"/>
 
+    </node>
+
+    <node pkg="rviz" type="rviz" name="msckf_rviz" args="-d $(find msckf_vio)/rviz/rviz_euroc_config.rviz">
     </node>
   </group>
 

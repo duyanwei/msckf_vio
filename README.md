@@ -1,3 +1,7 @@
+# Updated
+
+- create a benchmark node to publish ground truth path (similar to <a href="https://github.com/HKUST-Aerial-Robotics/VINS-Mono/blob/master/benchmark_publisher/src/benchmark_publisher_node.cpp">VINS-mono</a>)
+
 # MSCKF\_VIO
 
 

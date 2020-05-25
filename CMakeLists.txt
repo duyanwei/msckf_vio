@@ -79,6 +79,7 @@ include_directories(
 add_library(msckf_vio
   src/msckf_vio.cpp
   src/utils.cpp
+  src/benchmark.cpp
 )
 add_dependencies(msckf_vio
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
@@ -87,6 +88,19 @@ add_dependencies(msckf_vio
 target_link_libraries(msckf_vio
   ${catkin_LIBRARIES}
   ${SUITESPARSE_LIBRARIES}
+)
+
+# Msckf benchmark nodelet
+add_library(benchmark_nodelet
+  src/benchmark_nodelet.cpp
+)
+add_dependencies(benchmark_nodelet
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+  ${catkin_EXPORTED_TARGETS}
+)
+target_link_libraries(benchmark_nodelet
+  msckf_vio
+  ${catkin_LIBRARIES}
 )
 
 # Msckf Vio nodelet
@@ -134,7 +148,7 @@ target_link_libraries(image_processor_nodelet
 #############
 
 install(TARGETS
-  msckf_vio msckf_vio_nodelet image_processor image_processor_nodelet
+  msckf_vio msckf_vio_nodelet image_processor image_processor_nodelet benchmark_nodelet
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

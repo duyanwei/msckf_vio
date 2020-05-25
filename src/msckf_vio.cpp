@@ -193,6 +193,9 @@ bool MsckfVio::createRosIO() {
       &MsckfVio::mocapOdomCallback, this);
   mocap_odom_pub = nh.advertise<nav_msgs::Odometry>("gt_odom", 1);
 
+  // estimated path
+  path_pub = nh.advertise<nav_msgs::Path>("path", 1);
+
   return true;
 }
 
@@ -1440,6 +1443,16 @@ void MsckfVio::publish(const ros::Time& time) {
   feature_msg_ptr->width = feature_msg_ptr->points.size();
 
   feature_pub.publish(feature_msg_ptr);
+
+  // publish path
+  estimated_path.header = odom_msg.header;
+  {
+    geometry_msgs::PoseStamped stamped_pose;
+    stamped_pose.header = odom_msg.header;
+    stamped_pose.pose = odom_msg.pose.pose;
+    estimated_path.poses.push_back(stamped_pose);
+  }
+  path_pub.publish(estimated_path);
 
   return;
 }

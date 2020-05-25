@@ -18,3 +18,13 @@
     </description>
   </class>
 </library>
+
+<library path="lib/libbenchmark_nodelet">
+  <class name="msckf_vio/BenchmarkNodelet"
+         type="msckf_vio::BenchmarkNodelet"
+         base_class_type="nodelet::Nodelet">
+    <description>
+      Benchmark.
+    </description>
+  </class>
+</library>
